@@ -6,11 +6,7 @@ public class FitnessParable implements IFitness {
 
 	@Override
 	public double evaluate(double phenotype) {
-		double den = 1. + objetive(phenotype);
-		if (den == 0.)
-			return 1;
-		else
-			return 1. / den;
+		return 1 / (1 + objetive(phenotype));
 	}
 
 	@Override

@@ -24,4 +24,9 @@ public class IndividualFloat extends Individual {
 		return HelperMath.binaryStringToFloat(chromosome);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("[chromosome=%s,phenotype=%.15f,fitness=%.15f,selectionprob=%.15f,objetivevalue=%.15f]", chromosome, getPhenotype(), fitness, selectionProb, objetiveValue);
+	}
+
 }

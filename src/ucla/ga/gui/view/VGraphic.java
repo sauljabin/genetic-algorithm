@@ -97,9 +97,9 @@ public class VGraphic extends JFrame {
 		average.add(t, vAverage);
 		offline.add(t, vOffLine);
 		online.add(t, vOnLine);
-		lblAverage.setText("" + vAverage);
-		lblOffline.setText("" + vOffLine);
-		lblOnline.setText("" + vOnLine);
+		lblAverage.setText(String.format("%.15f", vAverage));
+		lblOffline.setText(String.format("%.15f", vOffLine));
+		lblOnline.setText(String.format("%.15f", vOnLine));
 	}
 
 	public void exportImage(String path) throws IOException {

@@ -34,4 +34,9 @@ public class IndividualInteger extends Individual {
 		return HelperMath.binaryStringToInteger(chromosome);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("[chromosome=%s,phenotype=%.0f,fitness=%.15f,selectionprob=%.15f,objetivevalue=%.0f]", chromosome, getPhenotype(), fitness, selectionProb, objetiveValue);
+	}
+
 }

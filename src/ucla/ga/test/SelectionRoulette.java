@@ -17,6 +17,7 @@ public class SelectionRoulette implements ISelection {
 
 		for (int j = 0; j < population.length; j++) {
 			probs[j] = (population[j].getFitness()) / sum;
+			population[j].setSelectionProb(probs[j]);
 		}
 
 		double rand = HelperMath.random();

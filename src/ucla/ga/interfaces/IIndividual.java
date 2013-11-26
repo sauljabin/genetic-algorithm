@@ -20,5 +20,5 @@ public interface IIndividual {
 	public double getObjetiveValue();
 	
 	public void setObjetiveValue(double value);
-
+	
 }

@@ -23,5 +23,11 @@ public class IndividualDouble extends Individual {
 	public double getPhenotype() {
 		return HelperMath.binaryStringToDouble(chromosome);
 	}
+	
+
+	@Override
+	public String toString() {
+		return String.format("[chromosome=%s,phenotype=%.15f,fitness=%.15f,selectionprob=%.15f,objetivevalue=%.15f]", chromosome, getPhenotype(), fitness, selectionProb, objetiveValue);
+	}
 
 }

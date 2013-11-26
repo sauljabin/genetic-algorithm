@@ -58,8 +58,4 @@ public abstract class Individual implements IIndividual {
 
 	}
 
-	@Override
-	public String toString() {
-		return String.format("[chromosome=%s,phenotype=%f,fitness=%.2f,selectionprob=%f]", chromosome, getPhenotype(), fitness, selectionProb);
-	}
 }
