@@ -1,13 +1,13 @@
-package ucla.ga.test;
+package ucla.ga.element.selection;
 
-import ucla.ga.interfaces.IIndividual;
-import ucla.ga.interfaces.ISelection;
+import ucla.ga.element.Individual;
+import ucla.ga.element.Selection;
 import ucla.ga.util.HelperMath;
 
-public class SelectionRoulette implements ISelection {
+public class SelectionRoulette extends Selection {
 
 	@Override
-	public IIndividual selection(IIndividual[] population) {
+	public Individual selection(Individual[] population) {
 		double sum = 0;
 		double[] probs = new double[population.length];
 

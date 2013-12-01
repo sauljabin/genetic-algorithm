@@ -2,25 +2,19 @@ package ucla.ga.element;
 
 import java.util.Vector;
 
-import ucla.ga.interfaces.ICrossover;
-import ucla.ga.interfaces.IFitness;
-import ucla.ga.interfaces.IIndividual;
-import ucla.ga.interfaces.IMutation;
-import ucla.ga.interfaces.ISelection;
+public class GeneticAlgorithm {
 
-public class GA {
-
-	private ISelection selection;
-	private IMutation mutation;
-	private ICrossover crossover;
-	private IFitness fitness;
-	private Vector<IIndividual[]> generations;
-	private IIndividual[] population;
+	private Selection selection;
+	private Mutation mutation;
+	private Crossover crossover;
+	private Fitness fitness;
+	private Vector<Individual[]> generations;
+	private Individual[] population;
 	private int generationMax;
 	private double mutationProb;
 	private double crossoverProb;
 
-	public GA(ISelection selection, IMutation mutation, ICrossover crossover, IFitness fitness, IIndividual[] population, int generationMax, double mutationProb, double crossoverProb) {
+	public GeneticAlgorithm(Selection selection, Mutation mutation, Crossover crossover, Fitness fitness, Individual[] population, int generationMax, double mutationProb, double crossoverProb) {
 		this.selection = selection;
 		this.mutation = mutation;
 		this.crossover = crossover;
@@ -29,17 +23,17 @@ public class GA {
 		this.generationMax = generationMax;
 		this.mutationProb = mutationProb;
 		this.crossoverProb = crossoverProb;
-		generations = new Vector<IIndividual[]>();
+		generations = new Vector<Individual[]>();
 	}
 
 	public void run() {
 		addPopulation();
 		evaluatePopulation();
 		for (int i = 0; i < generationMax; i++) {
-			IIndividual[] populationTemp = new IIndividual[population.length];
+			Individual[] populationTemp = new Individual[population.length];
 			for (int j = 0; j < population.length; j += 2) {
-				IIndividual a = selection.selection(population).copy();
-				IIndividual b = selection.selection(population).copy();
+				Individual a = selection.selection(population).copy();
+				Individual b = selection.selection(population).copy();
 				if (Math.random() <= crossoverProb) {
 					crossover.crossover(a, b);
 				}
@@ -58,9 +52,9 @@ public class GA {
 
 	private void evaluatePopulation() {
 		for (int i = 0; i < population.length; i++) {
-			IIndividual a = population[i];
-			a.setFitness(fitness.evaluate(a.getPhenotype()));
-			a.setObjetiveValue(fitness.objetive(a.getPhenotype()));
+			Individual a = population[i];
+			a.setFitness(fitness.getFitness(a.getPhenotype()));
+			a.setObjetiveValue(fitness.getObjetiveValue(a.getPhenotype()));
 		}
 	}
 
@@ -73,51 +67,51 @@ public class GA {
 		return String.format("[population=%d;generations=%d,crossoverProb=%.2f,mutationProb=%.2f]", population.length, generations.size(), crossoverProb, mutationProb);
 	}
 
-	public ISelection getSelection() {
+	public Selection getSelection() {
 		return selection;
 	}
 
-	public void setSelection(ISelection selection) {
+	public void setSelection(Selection selection) {
 		this.selection = selection;
 	}
 
-	public IMutation getMutation() {
+	public Mutation getMutation() {
 		return mutation;
 	}
 
-	public void setMutation(IMutation mutation) {
+	public void setMutation(Mutation mutation) {
 		this.mutation = mutation;
 	}
 
-	public ICrossover getCrossover() {
+	public Crossover getCrossover() {
 		return crossover;
 	}
 
-	public void setCrossover(ICrossover crossover) {
+	public void setCrossover(Crossover crossover) {
 		this.crossover = crossover;
 	}
 
-	public IFitness getFitness() {
+	public Fitness getFitness() {
 		return fitness;
 	}
 
-	public void setFitness(IFitness fitness) {
+	public void setFitness(Fitness fitness) {
 		this.fitness = fitness;
 	}
 
-	public Vector<IIndividual[]> getGenerations() {
+	public Vector<Individual[]> getGenerations() {
 		return generations;
 	}
 
-	public void setGenerations(Vector<IIndividual[]> generations) {
+	public void setGenerations(Vector<Individual[]> generations) {
 		this.generations = generations;
 	}
 
-	public IIndividual[] getPopulation() {
+	public Individual[] getPopulation() {
 		return population;
 	}
 
-	public void setPopulation(IIndividual[] population) {
+	public void setPopulation(Individual[] population) {
 		this.population = population;
 	}
 

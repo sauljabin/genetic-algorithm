@@ -1,14 +1,14 @@
-package ucla.ga.test;
+package ucla.ga.element.crossover;
 
-import ucla.ga.interfaces.ICrossover;
-import ucla.ga.interfaces.IIndividual;
+import ucla.ga.element.Crossover;
+import ucla.ga.element.Individual;
 import ucla.ga.util.HelperMath;
 
-public class CrossoverOnePoint implements ICrossover {
+public class CrossoverOnePoint extends Crossover {
 
 	@Override
-	public void crossover(IIndividual a, IIndividual b) {
-		int chromosomeSize =  a.getChromosome().length();		
+	public void crossover(Individual a, Individual b) {
+		int chromosomeSize = a.getChromosome().length();
 		int rand = HelperMath.random(1, a.getChromosome().length() - 1);
 		String tempA1 = a.getChromosome().substring(0, rand);
 		String tempA2 = a.getChromosome().substring(rand, chromosomeSize);

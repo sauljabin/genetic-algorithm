@@ -1,42 +1,56 @@
 package ucla.ga.test;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import ucla.ga.element.GA;
+import ucla.ga.element.GeneticAlgorithm;
+import ucla.ga.element.Individual;
+import ucla.ga.element.crossover.CrossoverOnePoint;
+import ucla.ga.element.fitness.FitnessParable;
+import ucla.ga.element.individual.*;
+import ucla.ga.element.mutation.MutationPerChromosome;
+import ucla.ga.element.selection.SelectionRoulette;
 import ucla.ga.gui.view.VGraphic;
-import ucla.ga.interfaces.IIndividual;
-import ucla.ga.util.HelperImage;
+import ucla.ga.util.HelperDate;
 
 public class TestSGA {
 
 	public static void main(String[] args) throws IOException {
-		IIndividual[] populationTemp = new IIndividual[6];
+		Individual[] populationTemp = new Individual[10];
 
 		for (int i = 0; i < populationTemp.length; i++) {
-			populationTemp[i] = new IndividualInteger(-100, 100);
+			populationTemp[i] = new IndividualReal(-50, 50, 10);
 		}
 
-		VGraphic vGraphic = new VGraphic("Experimento 1");
-		PrintWriter pw = new PrintWriter(new FileWriter("resultado.txt"), true);
+		String day = HelperDate.nowFormat("yyyyMMdd");
 
-		GA ag = new GA(new SelectionRoulette(), new MutationPerChromosome(), new CrossoverOnePoint(), new FitnessParable(), populationTemp, 300, .01, .5);
+		File file = new File("test/" + day);
+		file.mkdir();
+
+		String filesName = day + HelperDate.nowFormat("Hmmss");
+
+		VGraphic vGraphic = new VGraphic("TEST: " + filesName);
+
+		PrintWriter pw = new PrintWriter(new FileWriter(file.getPath() + "/result" + filesName + ".txt"), true);
+
+		GeneticAlgorithm ag = new GeneticAlgorithm(new SelectionRoulette(), new MutationPerChromosome(), new CrossoverOnePoint(), new FitnessParable(), populationTemp, 100, .001, .5);
 		ag.run();
 
 		int i = 0;
 		double onlinetemp = 0;
 		double average = 0;
 		double offlinetemp = 0;
-		for (IIndividual[] population : ag.getGenerations()) {
+		for (Individual[] population : ag.getGenerations()) {
 
 			System.out.println("GENERATION: " + i);
 			pw.println("GENERATION: " + i);
 
 			double sum = 0;
 			double probMax = 0;
-			IIndividual indMax = null;
-			for (IIndividual individual : population) {
+			Individual indMax = null;
+			for (Individual individual : population) {
 				System.out.println(individual);
 				pw.println(individual);
 				sum += individual.getObjetiveValue();
@@ -69,7 +83,7 @@ public class TestSGA {
 			i++;
 		}
 
-		vGraphic.exportImage("image.png");
+		vGraphic.exportImage(file.getPath() + "/result" + filesName + ".png");
 		pw.close();
 
 	}
