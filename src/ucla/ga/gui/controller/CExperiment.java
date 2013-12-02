@@ -77,6 +77,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 	}
 
 	private void initView() {
+		vExperiment.getCmbModelSelectLocale().setSelectedItem(config.get("LOCALE"));
 		for (String string : locale.list()) {
 			vExperiment.getCmbModelSelectLocale().addElement(string);
 		}
@@ -98,11 +99,13 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		vExperiment.getCmbModelMutation().addElement("MutationPerChromosome");
 
 		vExperiment.getCmbModelSelection().addElement("SelectionRoulette");
+
+		vExperiment.getTxtPathOutput().setText(new File("").getAbsolutePath());
+		vExperiment.getTxtName().setText("GA-" + HelperDate.nowFormat("yyyy-MM-dd"));
 	}
 
 	private void loadLocale() {
 		vExperiment.getLblLocale().setText(locale.get("lblLocale"));
-		vExperiment.getCmbModelSelectLocale().setSelectedItem(config.get("LOCALE"));
 		vExperiment.getBtnRun().setText(locale.get("btnRun"));
 		vExperiment.getBtnClose().setText(locale.get("btnClose"));
 		vExperiment.getLblLimLow().setText(locale.get("lblLimLow"));
@@ -113,12 +116,12 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		vExperiment.getLblProbCrossover().setText(locale.get("lblProbCrossover"));
 		vExperiment.getLblProbMutation().setText(locale.get("lblProbMutation"));
 		vExperiment.getLblPathOutput().setText(locale.get("lblPathOutput"));
-		vExperiment.getTxtPathOutput().setText(new File("").getAbsolutePath());
 		vExperiment.getLblCrossover().setText(locale.get("lblCrossover"));
 		vExperiment.getLblMutation().setText(locale.get("lblMutation"));
 		vExperiment.getLblIndividual().setText(locale.get("lblIndividual"));
 		vExperiment.getLblSelection().setText(locale.get("lblSelection"));
 		vExperiment.getLblFitness().setText(locale.get("lblFitness"));
+		vExperiment.getLblName().setText(locale.get("lblName"));
 	}
 
 	public void close() {
@@ -209,6 +212,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		String path = vExperiment.getTxtPathOutput().getText() + "/RESULTS-" + HelperDate.nowFormat("yyyyMMdd");
 		String time = HelperDate.nowFormat("yyyyMMddHmmss");
 		String filesName = path + "/" + time;
+		String name = vExperiment.getTxtName().getText();
 		Class<?> classIndividual = Class.forName("ucla.ga.element.individual" + "." + vExperiment.getCmbModelIndividual().getSelectedItem().toString());
 		Class<?> classCrossover = Class.forName("ucla.ga.element.crossover" + "." + vExperiment.getCmbModelCrossover().getSelectedItem().toString());
 		Class<?> classMutation = Class.forName("ucla.ga.element.mutation" + "." + vExperiment.getCmbModelMutation().getSelectedItem().toString());
@@ -226,7 +230,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			firstPopulation[i] = (Individual) constructorIndividual.newInstance(limLow, limUp, chromSize);
 		}
 		GeneticAlgorithm ag = new GeneticAlgorithm(selection, mutation, crossover, fitness, firstPopulation, generations, probMutation, probCrossover);
-		VGraphic vGraphic = new VGraphic("TEST: " + HelperDate.nowFormat("yyyyMMddHmmss"));
+		VGraphic vGraphic = new VGraphic(name, locale.get("xAxisLabel"), locale.get("yAxisLabel"));
 		File file = new File(path);
 		file.mkdir();
 		PrintWriter prGraph = new PrintWriter(new FileWriter(filesName + "GRAPH.txt"), true);
@@ -234,11 +238,9 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		PrintStream prConsl = System.out;
 
 		// RUN
+		vGraphic.setVisible(true);
 		vExperiment.setEnabled(false);
 		ag.run();
-
-		// RESULTS
-		vGraphic.setVisible(true);
 
 		// RESULTS VAR
 		double sumOnline = 0;
@@ -249,8 +251,8 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		double sumAverage = 0;
 		Individual elite = null;
 
-		String header = String.format("TIME: %s\nRANGE: [%.2f;%.2f]\nGENES: %d\nPOPULATION: %d\nGENERATIONS: %d\nPROB. CROSSOVER: %f\nPROB. MUTATION: %f", HelperDate.nowFormat("yyyy-MM-dd H:mm:ss"), limLow, limUp, chromSize, populationSize, generations, probCrossover, probMutation);
-
+		// RESULTS
+		String header = String.format("NAME: %s\nTIME: %s\nRANGE: [%.2f;%.2f]\nGENES: %d\nPOPULATION: %d\nGENERATIONS: %d\nPROB. CROSSOVER: %f\nPROB. MUTATION: %f", name, HelperDate.nowFormat("yyyy-MM-dd H:mm:ss"), limLow, limUp, chromSize, populationSize, generations, probCrossover, probMutation);
 		header += String.format("\nINDIVIDUAL: %s\nCROSSOVER: %s\nMUTATION: %s\nSELECTION: %s\nFITNESS: %s", classIndividual.getSimpleName(), classCrossover.getSimpleName(), classMutation.getSimpleName(), classSelection.getSimpleName(), classFitness.getSimpleName());
 
 		prConsl.println(header);

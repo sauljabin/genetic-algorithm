@@ -67,7 +67,6 @@ public class VExperiment extends JFrame {
 	private JTextField txtPathOutput;
 	private JButton btnPathOutput;
 	private JLabel lblPathOutput;
-	private JPanel pnlNorth;
 	private JPanel pnlEast;
 	private JLabel lblLimUp;
 	private JLabel lblCrossover;
@@ -86,6 +85,10 @@ public class VExperiment extends JFrame {
 	private DefaultComboBoxModel<String> cmbModelFitness;
 	private JComboBox<String> cmbFitness;
 
+	private JLabel lblName;
+
+	private JTextField txtName;
+
 	public VExperiment() {
 		setLayout(new BorderLayout());
 		setSize(720, 350);
@@ -98,16 +101,9 @@ public class VExperiment extends JFrame {
 		pnlCentral.setLayout(new MigLayout());
 		add(pnlCentral, BorderLayout.CENTER);
 
-		pnlNorth = new JPanel();
-		pnlNorth.setLayout(new MigLayout());
-		add(pnlNorth, BorderLayout.NORTH);
-
 		lblLocale = new JLabel();
 		cmbModelSelectLocale = new DefaultComboBoxModel<String>();
 		cmbSelectLocale = new JComboBox<String>(cmbModelSelectLocale);
-
-		pnlNorth.add(lblLocale, "width 100, height 25");
-		pnlNorth.add(cmbSelectLocale, "width 100, height 25, wrap 20");
 
 		lblLimLow = new JLabel();
 		lblLimUp = new JLabel();
@@ -143,6 +139,8 @@ public class VExperiment extends JFrame {
 		pnlSouth.add(btnRun);
 		pnlSouth.add(btnClose);
 
+		pnlCentral.add(lblLocale, "width 120, height 25");
+		pnlCentral.add(cmbSelectLocale, "width 120, height 25, wrap 20");
 		pnlCentral.add(lblLimLow, "width 120, height 25");
 		pnlCentral.add(spiLow, "width 120, height 25, wrap");
 		pnlCentral.add(lblLimUp, "width 120, height 25");
@@ -186,24 +184,32 @@ public class VExperiment extends JFrame {
 		txtPathOutput = new JTextField();
 		btnPathOutput = new JButton("...");
 
+		lblName = new JLabel();
+		txtName = new JTextField();
+
+		pnlEast.add(new JLabel(), "height 25, wrap 20");
+
 		pnlEast.add(lblIndividual, "width 80, height 25");
-		pnlEast.add(cmbIndividual, "width 280, height 25, wrap");
+		pnlEast.add(cmbIndividual, "growx, height 25, span 2, wrap");
 
 		pnlEast.add(lblCrossover, "width 80, height 25");
-		pnlEast.add(cmbCrossover, "width 280, height 25, wrap");
+		pnlEast.add(cmbCrossover, "growx, height 25, span 2, wrap");
 
 		pnlEast.add(lblMutation, "width 80, height 25");
-		pnlEast.add(cmbMutation, "width 280, height 25, wrap");
+		pnlEast.add(cmbMutation, "growx, height 25, span 2, wrap");
 
 		pnlEast.add(lblSelection, "width 80, height 25");
-		pnlEast.add(cmbSelection, "width 280, height 25, wrap");
+		pnlEast.add(cmbSelection, "growx, height 25, span 2, wrap");
 
 		pnlEast.add(lblFitness, "width 80, height 25");
-		pnlEast.add(cmbFitness, "width 280, height 25, wrap");
+		pnlEast.add(cmbFitness, "growx, height 25, span 2, wrap");
 
 		pnlEast.add(lblPathOutput, "width 80, height 25");
 		pnlEast.add(txtPathOutput, "width 280, height 25");
 		pnlEast.add(btnPathOutput, "width 20, height 25, wrap");
+
+		pnlEast.add(lblName, "width 80, height 25");
+		pnlEast.add(txtName, "growx, height 25, span 2, wrap");
 
 		buttons.add(btnClose);
 		buttons.add(btnPathOutput);
@@ -340,6 +346,14 @@ public class VExperiment extends JFrame {
 
 	public DefaultComboBoxModel<String> getCmbModelFitness() {
 		return cmbModelFitness;
+	}
+
+	public JLabel getLblName() {
+		return lblName;
+	}
+
+	public JTextField getTxtName() {
+		return txtName;
 	}
 
 }

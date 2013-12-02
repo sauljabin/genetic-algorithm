@@ -48,17 +48,17 @@ public class VGraphic extends JFrame {
 
 	private static final long serialVersionUID = -7690162952744313595L;
 
-	XYSeriesCollection dataset;
-	JFreeChart chart;
-	XYSeries offline;
-	XYSeries average;
-	XYSeries online;
+	private XYSeriesCollection dataset;
+	private JFreeChart chart;
+	private XYSeries offline;
+	private XYSeries average;
+	private XYSeries online;
 
-	JLabel lblOffline;
-	JLabel lblOnline;
-	JLabel lblAverage;
+	private JLabel lblOffline;
+	private JLabel lblOnline;
+	private JLabel lblAverage;	
 
-	public VGraphic(String title) {
+	public VGraphic(String title, String xLabel, String yLabel) {
 		setSize(800, 600);
 		setLocationRelativeTo(this);
 		setTitle(title);
@@ -72,15 +72,15 @@ public class VGraphic extends JFrame {
 		setLayout(new BorderLayout());
 
 		average = new XYSeries("Average");
-		offline = new XYSeries("Off-Line");
-		online = new XYSeries("On-Line");
+		offline = new XYSeries("Offline");
+		online = new XYSeries("Online");
 
 		dataset = new XYSeriesCollection();
 		dataset.addSeries(average);
 		dataset.addSeries(offline);
 		dataset.addSeries(online);
 
-		chart = ChartFactory.createXYLineChart(title, "Generations", "Values", dataset, PlotOrientation.VERTICAL, true, true, false);
+		chart = ChartFactory.createXYLineChart(title, xLabel, yLabel, dataset, PlotOrientation.VERTICAL, true, true, false);
 
 		add(new ChartPanel(chart), BorderLayout.CENTER);
 

@@ -48,18 +48,18 @@ public class TestGeneticAlgorithm {
 
 		String day = HelperDate.nowFormat("yyyyMMdd");
 
-		File file = new File("test/" + day);
+		File file = new File("RESULTS-TEST-" + day);
 		file.mkdir();
 
 		String filesName = day + HelperDate.nowFormat("Hmmss");
 
-		VGraphic vGraphic = new VGraphic("TEST: " + filesName);
-
-		PrintWriter pw = new PrintWriter(new FileWriter(file.getPath() + "/result" + filesName + ".txt"), true);
+		VGraphic vGraphic = new VGraphic("TEST: " + filesName, "Generations", "Values");
+		vGraphic.setVisible(true);
+		PrintWriter pw = new PrintWriter(new FileWriter(file.getPath() + "/" + filesName + ".txt"), true);
 
 		GeneticAlgorithm ag = new GeneticAlgorithm(new SelectionRoulette(), new MutationPerChromosome(), new CrossoverOnePoint(), new FitnessParable(), populationTemp, 100, .001, .5);
 		ag.run();
-
+		
 		int i = 0;
 		double onlinetemp = 0;
 		double average = 0;
@@ -105,7 +105,7 @@ public class TestGeneticAlgorithm {
 			i++;
 		}
 
-		vGraphic.exportImage(file.getPath() + "/result" + filesName + ".png");
+		vGraphic.exportImage(file.getPath() + "/" + filesName + ".png");
 		pw.close();
 
 	}
