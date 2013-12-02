@@ -15,7 +15,7 @@ import ucla.ga.element.selection.SelectionRoulette;
 import ucla.ga.gui.view.VGraphic;
 import ucla.ga.util.HelperDate;
 
-public class TestSGA {
+public class TestGeneticAlgorithm {
 
 	public static void main(String[] args) throws IOException {
 		Individual[] populationTemp = new Individual[10];

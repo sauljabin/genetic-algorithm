@@ -64,7 +64,7 @@ public class GeneticAlgorithm {
 
 	@Override
 	public String toString() {
-		return String.format("[population=%d;generations=%d,crossoverProb=%.2f,mutationProb=%.2f]", population.length, generations.size(), crossoverProb, mutationProb);
+		return String.format("[population=%d;generations=%d;crossoverprob=%.2f;mutationprob=%.2f]", population.length, generations.size(), crossoverProb, mutationProb);
 	}
 
 	public Selection getSelection() {

@@ -85,10 +85,13 @@ public abstract class Individual {
 	@Override
 	public String toString() {
 		String phenotype = "";
-		for (Double phen : getPhenotype()) {
-			phenotype += String.format("%.15f,", phen);
+		double[] x = getPhenotype();
+		for (int i = 0; i < x.length; i++) {
+			phenotype += String.format("%.15f", x[i]);
+			if (i != x.length - 1)
+				phenotype += "|";
 		}
-		return String.format("[class=%s,chromosome=%s,phenotype=%sobjetivevalue=%.15f,fitness=%.15f,selectionprob=%.15f,lowerlimit=%.3f,upperlimit=%.3f,size=%d]", this.getClass().getSimpleName(), chromosome, phenotype, objetiveValue, fitness, selectionProb, lowerLimit, upperLimit, size);
+		return String.format("[class=%s;chromosome=%s;phenotype=(%s);objetivevalue=%.15f;fitness=%.15f;selectionprob=%.15f;lowerlimit=%.3f;upperlimit=%.3f;size=%d]", this.getClass().getSimpleName(), chromosome, phenotype, objetiveValue, fitness, selectionProb, lowerLimit, upperLimit, size);
 	};
 
 	public abstract Individual copy();

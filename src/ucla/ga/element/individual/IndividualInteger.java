@@ -1,13 +1,14 @@
 package ucla.ga.element.individual;
 
 import ucla.ga.element.Individual;
+import ucla.ga.util.HelperGA;
 import ucla.ga.util.HelperMath;
 
 public class IndividualInteger extends Individual {
 
 	public IndividualInteger(double lowerLimit, double upperLimit, int size) {
 		super(lowerLimit, upperLimit, size);
-		chromosome = HelperMath.longToBinaryStringUnsigned(HelperMath.random(0l, HelperMath.pow(2l, size) - 1), size);
+		chromosome = HelperGA.randomChromosome(size);
 	}
 
 	public IndividualInteger(String chromosome, double fitness, double selectionProb, double objetiveValue, double lowerLimit, double upperLimit, int size) {
@@ -21,7 +22,7 @@ public class IndividualInteger extends Individual {
 
 	@Override
 	public double[] getPhenotype() {
-		return new double[] { Math.round(HelperMath.binaryStringToLongUnsigned(chromosome) * (upperLimit - lowerLimit) / (HelperMath.pow(2l, size) - 1) + lowerLimit) };
+		return new double[] { Math.round(HelperGA.convertChromosomeToReal(chromosome, lowerLimit, upperLimit, size)) };
 	}
 
 	public long getPhenotypeInteger() {

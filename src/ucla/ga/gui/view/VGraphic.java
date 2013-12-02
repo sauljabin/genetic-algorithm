@@ -89,8 +89,6 @@ public class VGraphic extends JFrame {
 		sur.add(lblOnline, "wrap");
 
 		add(sur, BorderLayout.SOUTH);
-		setVisible(true);
-		repaint();
 	}
 
 	public void addPoint(int t, double vAverage, double vOffLine, double vOnLine) {
