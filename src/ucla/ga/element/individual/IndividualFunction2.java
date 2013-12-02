@@ -36,7 +36,9 @@ public class IndividualFunction2 extends IndividualFunction1 {
 	
 	@Override
 	public Individual copy() {
-		return new IndividualFunction2(chromosome, fitness, selectionProb, objetiveValue, lowerLimit, upperLimit, size);
+		IndividualFunction2 copy = new IndividualFunction2(chromosome, fitness, selectionProb, objetiveValue, lowerLimit, upperLimit, size);
+		copy.setN(n);
+		return copy;
 	}
 
 }

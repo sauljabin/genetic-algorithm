@@ -28,7 +28,7 @@ public class Function1 extends Fitness {
 
 	@Override
 	public double getFitness(double... phenotype) {
-		return 0;
+		return 1 / (1 + getObjetiveValue(phenotype));
 	}
 
 	@Override

@@ -213,11 +213,11 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		String time = HelperDate.nowFormat("yyyyMMddHmmss");
 		String filesName = path + "/" + time;
 		String name = vExperiment.getTxtName().getText();
-		Class<?> classIndividual = Class.forName("ucla.ga.element.individual" + "." + vExperiment.getCmbModelIndividual().getSelectedItem().toString());
-		Class<?> classCrossover = Class.forName("ucla.ga.element.crossover" + "." + vExperiment.getCmbModelCrossover().getSelectedItem().toString());
-		Class<?> classMutation = Class.forName("ucla.ga.element.mutation" + "." + vExperiment.getCmbModelMutation().getSelectedItem().toString());
-		Class<?> classSelection = Class.forName("ucla.ga.element.selection" + "." + vExperiment.getCmbModelSelection().getSelectedItem().toString());
-		Class<?> classFitness = Class.forName("ucla.ga.element.fitness" + "." + vExperiment.getCmbModelFitness().getSelectedItem().toString());
+		Class<?> classIndividual = Class.forName("ucla.ga.element.individual." + vExperiment.getCmbModelIndividual().getSelectedItem().toString());
+		Class<?> classCrossover = Class.forName("ucla.ga.element.crossover." + vExperiment.getCmbModelCrossover().getSelectedItem().toString());
+		Class<?> classMutation = Class.forName("ucla.ga.element.mutation." + vExperiment.getCmbModelMutation().getSelectedItem().toString());
+		Class<?> classSelection = Class.forName("ucla.ga.element.selection." + vExperiment.getCmbModelSelection().getSelectedItem().toString());
+		Class<?> classFitness = Class.forName("ucla.ga.element.fitness." + vExperiment.getCmbModelFitness().getSelectedItem().toString());
 
 		// CREATE OBJECTS
 		Selection selection = (Selection) classSelection.newInstance();

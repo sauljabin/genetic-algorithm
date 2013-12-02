@@ -27,7 +27,7 @@ import ucla.ga.util.HelperGA;
  */
 public class IndividualFunction1 extends Individual {
 
-	private int n;
+	protected int n;
 
 	public int getN() {
 		return n;
@@ -39,7 +39,7 @@ public class IndividualFunction1 extends Individual {
 
 	public IndividualFunction1(double lowerLimit, double upperLimit, int size) {
 		super(lowerLimit, upperLimit, size);
-		n = 6;
+		n = 30;
 		chromosome = "";
 		for (int i = 0; i < n; i++) {
 			chromosome += HelperGA.randomChromosome(size);
@@ -52,7 +52,9 @@ public class IndividualFunction1 extends Individual {
 
 	@Override
 	public Individual copy() {
-		return new IndividualFunction1(chromosome, fitness, selectionProb, objetiveValue, lowerLimit, upperLimit, size);
+		IndividualFunction1 copy = new IndividualFunction1(chromosome, fitness, selectionProb, objetiveValue, lowerLimit, upperLimit, size);
+		copy.setN(n);
+		return copy;
 	}
 
 	@Override
