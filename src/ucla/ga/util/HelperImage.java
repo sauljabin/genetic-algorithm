@@ -33,7 +33,6 @@ import javax.imageio.ImageIO;
 /**
  * 
  * @author Saul Pina - sauljp07@gmail.com
- * 
  */
 public abstract class HelperImage {
 
