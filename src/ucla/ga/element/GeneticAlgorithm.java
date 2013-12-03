@@ -73,10 +73,18 @@ public class GeneticAlgorithm {
 	}
 
 	private void evaluatePopulation() {
+		double populationObjetiveValue = 0;
+
 		for (int i = 0; i < population.length; i++) {
 			Individual a = population[i];
-			a.setFitness(fitness.getFitness(a.getPhenotype()));
-			a.setObjetiveValue(fitness.getObjetiveValue(a.getPhenotype()));
+			double f = fitness.getObjetiveValue(a.getPhenotype());
+			a.setObjetiveValue(f);
+			populationObjetiveValue += f;
+		}
+
+		for (int i = 0; i < population.length; i++) {
+			Individual a = population[i];
+			a.setFitness(fitness.getFitness(population.length, populationObjetiveValue, a.getObjetiveValue(), a.getPhenotype()));
 		}
 	}
 

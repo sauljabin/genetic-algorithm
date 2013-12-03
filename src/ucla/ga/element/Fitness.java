@@ -23,7 +23,7 @@ package ucla.ga.element;
  * @author Saul Pina - sauljp07@gmail.com
  */
 public abstract class Fitness {
-	public abstract double getFitness(double... phenotype);
+	public abstract double getFitness(int populationSize, double populationObjetiveValue, double objetiveValue, double... phenotype);
 
 	public abstract double getObjetiveValue(double... phenotype);
 }

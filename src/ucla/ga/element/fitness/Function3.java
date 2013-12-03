@@ -27,8 +27,8 @@ import ucla.ga.element.Fitness;
 public class Function3 extends Fitness {
 
 	@Override
-	public double getFitness(double... phenotype) {
-		return 0;
+	public double getFitness(int populationSize, double populationObjetiveValue, double objetiveValue, double... phenotype) {
+		return 10 - objetiveValue * populationSize / populationObjetiveValue;
 	}
 
 	@Override
