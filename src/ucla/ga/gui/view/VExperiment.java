@@ -212,23 +212,17 @@ public class VExperiment extends JFrame {
 		pnlCentral.add(lblLimLow, "width 120, height 25");
 		pnlCentral.add(spiLow, "width 120, height 25");
 		pnlCentral.add(lblIndividual, "width 80, height 25");
-		pnlCentral.add(cmbIndividual, "growx, height 25, span 2");
-		pnlCentral.add(lblAverageTitle, "width 70, height 25");
-		pnlCentral.add(lblAverage, "width 150, height 25, wrap");
+		pnlCentral.add(cmbIndividual, "growx, height 25, span 2, wrap");
 
 		pnlCentral.add(lblLimUp, "width 120, height 25");
 		pnlCentral.add(spiUp, "width 120, height 25");
 		pnlCentral.add(lblCrossover, "width 80, height 25");
-		pnlCentral.add(cmbCrossover, "growx, height 25, span 2");
-		pnlCentral.add(lblOfflineTitle, "growx, height 25");
-		pnlCentral.add(lblOffline, "growx, height 25, wrap");
+		pnlCentral.add(cmbCrossover, "growx, height 25, span 2, wrap");
 
 		pnlCentral.add(lblChromosome, "width 120, height 25");
 		pnlCentral.add(spiChromosome, "width 120, height 25");
 		pnlCentral.add(lblMutation, "width 80, height 25");
-		pnlCentral.add(cmbMutation, "growx, height 25, span 2");
-		pnlCentral.add(lblOnlineTitle, "growx, height 25");
-		pnlCentral.add(lblOnline, "growx, height 25, wrap");
+		pnlCentral.add(cmbMutation, "growx, height 25, span 2, wrap");
 
 		pnlCentral.add(lblPopulation, "width 120, height 25");
 		pnlCentral.add(spiPopulation, "width 120, height 25");
@@ -238,18 +232,24 @@ public class VExperiment extends JFrame {
 		pnlCentral.add(lblGenerations, "width 120, height 25");
 		pnlCentral.add(spiGenerations, "width 120, height 25");
 		pnlCentral.add(lblFitness, "width 80, height 25");
-		pnlCentral.add(cmbFitness, "growx, height 25, span 2, wrap");
+		pnlCentral.add(cmbFitness, "growx, height 25, span 2");
+		pnlCentral.add(lblAverageTitle, "width 70, height 25");
+		pnlCentral.add(lblAverage, "width 200, height 25, wrap");
 
 		pnlCentral.add(lblProbCrossover, "width 120, height 25");
 		pnlCentral.add(spiProbCrossover, "width 120, height 25");
 		pnlCentral.add(lblPathOutput, "width 80, height 25");
 		pnlCentral.add(txtPathOutput, "width 280, height 25");
-		pnlCentral.add(btnPathOutput, "width 20, height 25, wrap");
+		pnlCentral.add(btnPathOutput, "width 20, height 25");
+		pnlCentral.add(lblOfflineTitle, "growx, height 25");
+		pnlCentral.add(lblOffline, "growx, height 25, wrap");
 
 		pnlCentral.add(lblProbMutation, "width 120, height 25");
 		pnlCentral.add(spiProbMutation, "width 120, height 25");
 		pnlCentral.add(lblName, "width 80, height 25");
-		pnlCentral.add(txtName, "growx, height 25, span 2, wrap 10");
+		pnlCentral.add(txtName, "growx, height 25, span 2");
+		pnlCentral.add(lblOnlineTitle, "growx, height 25");
+		pnlCentral.add(lblOnline, "growx, height 25, wrap 10");
 
 		pnlCentral.add(chartPanel, "growx, span 7");
 

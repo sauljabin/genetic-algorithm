@@ -50,6 +50,6 @@ public class Config {
 	}
 
 	public void save() throws FileNotFoundException, IOException {
-		properties.store(new FileOutputStream(String.format("%sconfig.properties", path)), "");
+		properties.store(new FileOutputStream(String.format("%sconfig.properties", path)), "GENETIC_ALGORITHM");
 	}
 }
