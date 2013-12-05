@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -45,14 +47,14 @@ import ucla.ga.element.Individual;
 import ucla.ga.element.Mutation;
 import ucla.ga.element.Selection;
 import ucla.ga.gui.view.VExperiment;
-import ucla.ga.gui.view.VGraphic;
 import ucla.ga.util.HelperDate;
+import ucla.ga.util.HelperImage;
 
 /**
  * 
  * @author Saul Pina - sauljp07@gmail.com
  */
-public class CExperiment implements ActionListener, WindowListener, ItemListener {
+public class CExperiment implements ActionListener, WindowListener, ItemListener, KeyListener {
 
 	private Locale locale;
 	private Config config;
@@ -101,7 +103,10 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		vExperiment.getCmbModelSelection().addElement("SelectionRoulette");
 
 		vExperiment.getTxtPathOutput().setText(new File("").getAbsolutePath());
-		vExperiment.getTxtName().setText("GA-" + HelperDate.nowFormat("yyyy-MM-dd"));
+		String title = "GA-" + HelperDate.nowFormat("yyyy-MM-dd");
+		vExperiment.getTxtName().setText(title);
+		vExperiment.getChart().setTitle(title);
+		vExperiment.setTitle(title);
 	}
 
 	private void loadLocale() {
@@ -122,6 +127,8 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		vExperiment.getLblSelection().setText(locale.get("lblSelection"));
 		vExperiment.getLblFitness().setText(locale.get("lblFitness"));
 		vExperiment.getLblName().setText(locale.get("lblName"));
+		vExperiment.getChart().getXYPlot().getDomainAxis().setLabel(locale.get("xAxisLabel"));
+		vExperiment.getChart().getXYPlot().getRangeAxis().setLabel(locale.get("yAxisLabel"));
 	}
 
 	public void close() {
@@ -195,7 +202,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
-				vExperiment.setEnabled(true);
+				vExperiment.enable();
 			}
 		}
 	}
@@ -230,7 +237,6 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			firstPopulation[i] = (Individual) constructorIndividual.newInstance(limLow, limUp, chromSize);
 		}
 		GeneticAlgorithm ag = new GeneticAlgorithm(selection, mutation, crossover, fitness, firstPopulation, generations, probMutation, probCrossover);
-		VGraphic vGraphic = new VGraphic(name, locale.get("xAxisLabel"), locale.get("yAxisLabel"));
 		File file = new File(path);
 		file.mkdir();
 		PrintWriter prGraph = new PrintWriter(new FileWriter(filesName + "GRAPH.txt"), true);
@@ -238,10 +244,9 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		PrintStream prConsl = System.out;
 
 		// RUN
-		vGraphic.setVisible(true);
-		vExperiment.setEnabled(false);
+		vExperiment.disable();
 		ag.run();
-
+		vExperiment.resetXY();
 		// RESULTS VAR
 		double sumOnline = 0;
 		double sumOffline = 0;
@@ -291,13 +296,43 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			prConsl.println(String.format("AVERAGE: %.15f; OFFLINE: %.15f; ONLINE: %.15f; ELITE: %.15f", average, offline, online, elite.getSelectionProb()));
 			prPopul.println(String.format("AVERAGE: %.15f; OFFLINE: %.15f; ONLINE: %.15f; ELITE: %.15f", average, offline, online, elite.getSelectionProb()));
 			prGraph.println(String.format("%d\t%.15f\t%.15f\t%.15f\t%.15f", i, average, offline, online, elite.getSelectionProb()));
-			vGraphic.addPoint(i, average, offline, online);
+			addPoint(i, average, offline, online);
 		}
 
-		vGraphic.exportImage(filesName + "IMAGE.png");
+		exportImage(filesName + "IMAGE.png");
 		prGraph.close();
 		prPopul.close();
-		vExperiment.setEnabled(true);
+		vExperiment.enable();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		String title = vExperiment.getTxtName().getText();
+		vExperiment.setTitle(title);
+		vExperiment.getChart().setTitle(title);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	public void exportImage(String path) throws IOException {
+		HelperImage.writeImage(vExperiment.getChart().createBufferedImage(800, 600), path);
+	}
+
+	public void addPoint(int t, double vAverage, double vOffLine, double vOnLine) {
+		vExperiment.getAverage().add(t, vAverage);
+		vExperiment.getOffline().add(t, vOffLine);
+		vExperiment.getOnline().add(t, vOnLine);
+		vExperiment.getLblAverage().setText(String.format("%.15f", vAverage));
+		vExperiment.getLblOffline().setText(String.format("%.15f", vOffLine));
+		vExperiment.getLblOnline().setText(String.format("%.15f", vOnLine));
 	}
 
 }

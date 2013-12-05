@@ -31,6 +31,14 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import ucla.ga.gui.controller.CExperiment;
 import net.miginfocom.swing.MigLayout;
@@ -67,7 +75,6 @@ public class VExperiment extends JFrame {
 	private JTextField txtPathOutput;
 	private JButton btnPathOutput;
 	private JLabel lblPathOutput;
-	private JPanel pnlEast;
 	private JLabel lblLimUp;
 	private JLabel lblCrossover;
 	private DefaultComboBoxModel<String> cmbModelCrossover;
@@ -84,18 +91,33 @@ public class VExperiment extends JFrame {
 	private JLabel lblFitness;
 	private DefaultComboBoxModel<String> cmbModelFitness;
 	private JComboBox<String> cmbFitness;
-
 	private JLabel lblName;
-
 	private JTextField txtName;
+
+	private XYSeriesCollection dataset;
+	private JFreeChart chart;
+	private XYSeries offline;
+	private XYSeries average;
+	private XYSeries online;
+	private JLabel lblOffline;
+	private JLabel lblOnline;
+	private JLabel lblAverage;
+	private ChartPanel chartPanel;
+
+	private JLabel lblAverageTitle;
+
+	private JLabel lblOfflineTitle;
+
+	private JLabel lblOnlineTitle;
 
 	public VExperiment() {
 		setLayout(new BorderLayout());
-		setSize(720, 350);
-		setTitle("GENETIC ALGORITHM - SAUL PIÑA");
-		setResizable(false);
+		setSize(900, 700);
 		setLocationRelativeTo(this);
+		setResizable(false);
 		buttons = new ArrayList<JButton>();
+
+		// CENTER
 
 		pnlCentral = new JPanel();
 		pnlCentral.setLayout(new MigLayout());
@@ -106,9 +128,10 @@ public class VExperiment extends JFrame {
 		cmbSelectLocale = new JComboBox<String>(cmbModelSelectLocale);
 
 		lblLimLow = new JLabel();
-		lblLimUp = new JLabel();
 		spiLow = new JSpinner();
 		spiLow.setModel(new SpinnerNumberModel(-10., -100000., 100000., .5));
+
+		lblLimUp = new JLabel();
 		spiUp = new JSpinner();
 		spiUp.setModel(new SpinnerNumberModel(10., -100000., 100000., .5));
 
@@ -131,34 +154,6 @@ public class VExperiment extends JFrame {
 		lblProbMutation = new JLabel();
 		spiProbMutation = new JSpinner();
 		spiProbMutation.setModel(new SpinnerNumberModel(.001, 0., 1., .001));
-
-		pnlSouth = new JPanel();
-		add(pnlSouth, BorderLayout.SOUTH);
-		btnRun = new JButton();
-		btnClose = new JButton();
-		pnlSouth.add(btnRun);
-		pnlSouth.add(btnClose);
-
-		pnlCentral.add(lblLocale, "width 120, height 25");
-		pnlCentral.add(cmbSelectLocale, "width 120, height 25, wrap 20");
-		pnlCentral.add(lblLimLow, "width 120, height 25");
-		pnlCentral.add(spiLow, "width 120, height 25, wrap");
-		pnlCentral.add(lblLimUp, "width 120, height 25");
-		pnlCentral.add(spiUp, "width 120, height 25, wrap");
-		pnlCentral.add(lblChromosome, "width 120, height 25");
-		pnlCentral.add(spiChromosome, "width 120, height 25, wrap");
-		pnlCentral.add(lblPopulation, "width 120, height 25");
-		pnlCentral.add(spiPopulation, "width 120, height 25, wrap");
-		pnlCentral.add(lblGenerations, "width 120, height 25");
-		pnlCentral.add(spiGenerations, "width 120, height 25, wrap");
-		pnlCentral.add(lblProbCrossover, "width 120, height 25");
-		pnlCentral.add(spiProbCrossover, "width 120, height 25, wrap");
-		pnlCentral.add(lblProbMutation, "width 120, height 25");
-		pnlCentral.add(spiProbMutation, "width 120, height 25, wrap");
-
-		pnlEast = new JPanel();
-		pnlEast.setLayout(new MigLayout());
-		add(pnlEast, BorderLayout.EAST);
 
 		lblIndividual = new JLabel();
 		cmbModelIndividual = new DefaultComboBoxModel<String>();
@@ -187,30 +182,88 @@ public class VExperiment extends JFrame {
 		lblName = new JLabel();
 		txtName = new JTextField();
 
-		pnlEast.add(new JLabel(), "height 25, wrap 20");
+		lblAverage = new JLabel("");
+		lblAverage.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblAverageTitle = new JLabel("Average: ");
 
-		pnlEast.add(lblIndividual, "width 80, height 25");
-		pnlEast.add(cmbIndividual, "growx, height 25, span 2, wrap");
+		lblOffline = new JLabel("");
+		lblOffline.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblOfflineTitle = new JLabel("Offline: ");
 
-		pnlEast.add(lblCrossover, "width 80, height 25");
-		pnlEast.add(cmbCrossover, "growx, height 25, span 2, wrap");
+		lblOnline = new JLabel("");
+		lblOnline.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblOnlineTitle = new JLabel("Online: ");
 
-		pnlEast.add(lblMutation, "width 80, height 25");
-		pnlEast.add(cmbMutation, "growx, height 25, span 2, wrap");
+		average = new XYSeries("Average");
+		offline = new XYSeries("Offline");
+		online = new XYSeries("Online");
 
-		pnlEast.add(lblSelection, "width 80, height 25");
-		pnlEast.add(cmbSelection, "growx, height 25, span 2, wrap");
+		dataset = new XYSeriesCollection();
+		dataset.addSeries(average);
+		dataset.addSeries(offline);
+		dataset.addSeries(online);
 
-		pnlEast.add(lblFitness, "width 80, height 25");
-		pnlEast.add(cmbFitness, "growx, height 25, span 2, wrap");
+		chart = ChartFactory.createXYLineChart("title", "xLabel", "yLabel", dataset, PlotOrientation.VERTICAL, true, true, false);
+		chartPanel = new ChartPanel(chart);
 
-		pnlEast.add(lblPathOutput, "width 80, height 25");
-		pnlEast.add(txtPathOutput, "width 280, height 25");
-		pnlEast.add(btnPathOutput, "width 20, height 25, wrap");
+		pnlCentral.add(lblLocale, "width 120, height 25");
+		pnlCentral.add(cmbSelectLocale, "width 120, height 25, wrap 20");
 
-		pnlEast.add(lblName, "width 80, height 25");
-		pnlEast.add(txtName, "growx, height 25, span 2, wrap");
+		pnlCentral.add(lblLimLow, "width 120, height 25");
+		pnlCentral.add(spiLow, "width 120, height 25");
+		pnlCentral.add(lblIndividual, "width 80, height 25");
+		pnlCentral.add(cmbIndividual, "growx, height 25, span 2");
+		pnlCentral.add(lblAverageTitle, "width 70, height 25");
+		pnlCentral.add(lblAverage, "width 150, height 25, wrap");
 
+		pnlCentral.add(lblLimUp, "width 120, height 25");
+		pnlCentral.add(spiUp, "width 120, height 25");
+		pnlCentral.add(lblCrossover, "width 80, height 25");
+		pnlCentral.add(cmbCrossover, "growx, height 25, span 2");
+		pnlCentral.add(lblOfflineTitle, "growx, height 25");
+		pnlCentral.add(lblOffline, "growx, height 25, wrap");
+
+		pnlCentral.add(lblChromosome, "width 120, height 25");
+		pnlCentral.add(spiChromosome, "width 120, height 25");
+		pnlCentral.add(lblMutation, "width 80, height 25");
+		pnlCentral.add(cmbMutation, "growx, height 25, span 2");
+		pnlCentral.add(lblOnlineTitle, "growx, height 25");
+		pnlCentral.add(lblOnline, "growx, height 25, wrap");
+
+		pnlCentral.add(lblPopulation, "width 120, height 25");
+		pnlCentral.add(spiPopulation, "width 120, height 25");
+		pnlCentral.add(lblSelection, "width 80, height 25");
+		pnlCentral.add(cmbSelection, "growx, height 25, span 2, wrap");
+
+		pnlCentral.add(lblGenerations, "width 120, height 25");
+		pnlCentral.add(spiGenerations, "width 120, height 25");
+		pnlCentral.add(lblFitness, "width 80, height 25");
+		pnlCentral.add(cmbFitness, "growx, height 25, span 2, wrap");
+
+		pnlCentral.add(lblProbCrossover, "width 120, height 25");
+		pnlCentral.add(spiProbCrossover, "width 120, height 25");
+		pnlCentral.add(lblPathOutput, "width 80, height 25");
+		pnlCentral.add(txtPathOutput, "width 280, height 25");
+		pnlCentral.add(btnPathOutput, "width 20, height 25, wrap");
+
+		pnlCentral.add(lblProbMutation, "width 120, height 25");
+		pnlCentral.add(spiProbMutation, "width 120, height 25");
+		pnlCentral.add(lblName, "width 80, height 25");
+		pnlCentral.add(txtName, "growx, height 25, span 2, wrap 10");
+
+		pnlCentral.add(chartPanel, "growx, span 7");
+
+		// SOUTH
+		pnlSouth = new JPanel();
+		add(pnlSouth, BorderLayout.SOUTH);
+
+		btnRun = new JButton();
+		btnClose = new JButton();
+
+		pnlSouth.add(btnRun);
+		pnlSouth.add(btnClose);
+
+		// ADD BUTTONS
 		buttons.add(btnClose);
 		buttons.add(btnPathOutput);
 		buttons.add(btnRun);
@@ -222,6 +275,7 @@ public class VExperiment extends JFrame {
 		}
 		addWindowListener(listener);
 		cmbSelectLocale.addItemListener(listener);
+		txtName.addKeyListener(listener);
 	}
 
 	public JLabel getLblLocale() {
@@ -354,6 +408,85 @@ public class VExperiment extends JFrame {
 
 	public JTextField getTxtName() {
 		return txtName;
+	}
+
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public void disable() {
+		btnRun.setEnabled(false);
+		btnPathOutput.setEnabled(false);
+		spiLow.setEnabled(false);
+		spiUp.setEnabled(false);
+		spiChromosome.setEnabled(false);
+		spiPopulation.setEnabled(false);
+		spiGenerations.setEnabled(false);
+		spiProbCrossover.setEnabled(false);
+		spiProbMutation.setEnabled(false);
+		txtName.setEnabled(false);
+		txtPathOutput.setEnabled(false);
+		cmbSelectLocale.setEnabled(false);
+		cmbIndividual.setEnabled(false);
+		cmbCrossover.setEnabled(false);
+		cmbMutation.setEnabled(false);
+		cmbSelection.setEnabled(false);
+		cmbFitness.setEnabled(false);
+	}
+
+	public void enable() {
+		btnRun.setEnabled(true);
+		btnPathOutput.setEnabled(true);
+		spiLow.setEnabled(true);
+		spiUp.setEnabled(true);
+		spiChromosome.setEnabled(true);
+		spiPopulation.setEnabled(true);
+		spiGenerations.setEnabled(true);
+		spiProbCrossover.setEnabled(true);
+		spiProbMutation.setEnabled(true);
+		txtName.setEnabled(true);
+		txtPathOutput.setEnabled(true);
+		cmbSelectLocale.setEnabled(true);
+		cmbIndividual.setEnabled(true);
+		cmbCrossover.setEnabled(true);
+		cmbMutation.setEnabled(true);
+		cmbSelection.setEnabled(true);
+		cmbFitness.setEnabled(true);
+	}
+
+	public XYSeries getOffline() {
+		return offline;
+	}
+
+	public XYSeries getAverage() {
+		return average;
+	}
+
+	public XYSeries getOnline() {
+		return online;
+	}
+
+	public void resetXY() {
+		average = new XYSeries("Average");
+		offline = new XYSeries("Offline");
+		online = new XYSeries("Online");
+
+		dataset.removeAllSeries();
+		dataset.addSeries(average);
+		dataset.addSeries(offline);
+		dataset.addSeries(online);
+	}
+
+	public JLabel getLblOffline() {
+		return lblOffline;
+	}
+
+	public JLabel getLblOnline() {
+		return lblOnline;
+	}
+
+	public JLabel getLblAverage() {
+		return lblAverage;
 	}
 
 }

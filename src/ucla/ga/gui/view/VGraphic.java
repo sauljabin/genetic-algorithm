@@ -81,36 +81,35 @@ public class VGraphic extends JFrame {
 		dataset.addSeries(online);
 
 		chart = ChartFactory.createXYLineChart(title, xLabel, yLabel, dataset, PlotOrientation.VERTICAL, true, true, false);
-
 		add(new ChartPanel(chart), BorderLayout.CENTER);
 
-		JPanel sur = new JPanel(new MigLayout());
+		JPanel south = new JPanel(new MigLayout());
 
 		lblAverage = new JLabel("");
 		lblAverage.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblAverage.setFont(new Font("ARIAL", Font.BOLD, 26));
 		JLabel lblAverageTitle = new JLabel("Average: ");
 		lblAverageTitle.setFont(new Font("ARIAL", Font.BOLD, 26));
-		sur.add(lblAverageTitle);
-		sur.add(lblAverage, "wrap");
+		south.add(lblAverageTitle);
+		south.add(lblAverage, "wrap");
 
 		lblOffline = new JLabel("");
 		lblOffline.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblOffline.setFont(new Font("ARIAL", Font.BOLD, 26));
 		JLabel lblOfflineTitle = new JLabel("Offline: ");
 		lblOfflineTitle.setFont(new Font("ARIAL", Font.BOLD, 26));
-		sur.add(lblOfflineTitle);
-		sur.add(lblOffline, "wrap");
+		south.add(lblOfflineTitle);
+		south.add(lblOffline, "wrap");
 
 		lblOnline = new JLabel("");
 		lblOnline.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblOnline.setFont(new Font("ARIAL", Font.BOLD, 26));
 		JLabel lblOnlineTitle = new JLabel("Online: ");
 		lblOnlineTitle.setFont(new Font("ARIAL", Font.BOLD, 26));
-		sur.add(lblOnlineTitle);
-		sur.add(lblOnline, "wrap");
+		south.add(lblOnlineTitle);
+		south.add(lblOnline, "wrap");
 
-		add(sur, BorderLayout.SOUTH);
+		add(south, BorderLayout.SOUTH);
 	}
 
 	public void addPoint(int t, double vAverage, double vOffLine, double vOnLine) {
