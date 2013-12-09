@@ -67,9 +67,9 @@ public class VExperiment extends JFrame {
 	private JLabel lblGenerations;
 	private JSpinner spiGenerations;
 	private JLabel lblProbCrossover;
-	private JSpinner spiProbCrossover;
+	private JTextField txtProbCrossover;
 	private JLabel lblProbMutation;
-	private JSpinner spiProbMutation;
+	private JTextField txtProbMutation;
 	private JPanel pnlSouth;
 	private JButton btnClose;
 	private JTextField txtPathOutput;
@@ -103,12 +103,12 @@ public class VExperiment extends JFrame {
 	private JLabel lblOnline;
 	private JLabel lblAverage;
 	private ChartPanel chartPanel;
-
 	private JLabel lblAverageTitle;
-
 	private JLabel lblOfflineTitle;
-
 	private JLabel lblOnlineTitle;
+	private XYSeries elite;
+	private JLabel lblEliteTitle;
+	private JLabel lblElite;
 
 	public VExperiment() {
 		setLayout(new BorderLayout());
@@ -148,12 +148,10 @@ public class VExperiment extends JFrame {
 		spiGenerations.setModel(new SpinnerNumberModel(100, 0, 100000, 1));
 
 		lblProbCrossover = new JLabel();
-		spiProbCrossover = new JSpinner();
-		spiProbCrossover.setModel(new SpinnerNumberModel(.5, 0., 1., .01));
+		txtProbCrossover = new JTextField("0.5");
 
 		lblProbMutation = new JLabel();
-		spiProbMutation = new JSpinner();
-		spiProbMutation.setModel(new SpinnerNumberModel(.001, 0., 1., .001));
+		txtProbMutation = new JTextField("0.001");
 
 		lblIndividual = new JLabel();
 		cmbModelIndividual = new DefaultComboBoxModel<String>();
@@ -194,20 +192,26 @@ public class VExperiment extends JFrame {
 		lblOnline.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblOnlineTitle = new JLabel("Online: ");
 
+		lblElite = new JLabel("");
+		lblElite.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblEliteTitle = new JLabel("Elite: ");
+
 		average = new XYSeries("Average");
 		offline = new XYSeries("Offline");
 		online = new XYSeries("Online");
+		elite = new XYSeries("Elite");
 
 		dataset = new XYSeriesCollection();
 		dataset.addSeries(average);
-		dataset.addSeries(offline);
 		dataset.addSeries(online);
+		dataset.addSeries(elite);
+		dataset.addSeries(offline);
 
 		chart = ChartFactory.createXYLineChart("title", "xLabel", "yLabel", dataset, PlotOrientation.VERTICAL, true, true, false);
 		chartPanel = new ChartPanel(chart);
 
 		pnlCentral.add(lblLocale, "width 120, height 25");
-		pnlCentral.add(cmbSelectLocale, "width 120, height 25, wrap 20");
+		pnlCentral.add(cmbSelectLocale, "width 120, height 25, wrap");
 
 		pnlCentral.add(lblLimLow, "width 120, height 25");
 		pnlCentral.add(spiLow, "width 120, height 25");
@@ -227,29 +231,31 @@ public class VExperiment extends JFrame {
 		pnlCentral.add(lblPopulation, "width 120, height 25");
 		pnlCentral.add(spiPopulation, "width 120, height 25");
 		pnlCentral.add(lblSelection, "width 80, height 25");
-		pnlCentral.add(cmbSelection, "growx, height 25, span 2, wrap");
+		pnlCentral.add(cmbSelection, "growx, height 25, span 2");
+		pnlCentral.add(lblAverageTitle, "width 70, height 25");
+		pnlCentral.add(lblAverage, "width 200, height 25, wrap");
 
 		pnlCentral.add(lblGenerations, "width 120, height 25");
 		pnlCentral.add(spiGenerations, "width 120, height 25");
 		pnlCentral.add(lblFitness, "width 80, height 25");
 		pnlCentral.add(cmbFitness, "growx, height 25, span 2");
-		pnlCentral.add(lblAverageTitle, "width 70, height 25");
-		pnlCentral.add(lblAverage, "width 200, height 25, wrap");
+		pnlCentral.add(lblOnlineTitle, "growx, height 25");
+		pnlCentral.add(lblOnline, "growx, height 25, wrap");
 
 		pnlCentral.add(lblProbCrossover, "width 120, height 25");
-		pnlCentral.add(spiProbCrossover, "width 120, height 25");
+		pnlCentral.add(txtProbCrossover, "width 120, height 25");
 		pnlCentral.add(lblPathOutput, "width 80, height 25");
 		pnlCentral.add(txtPathOutput, "width 280, height 25");
 		pnlCentral.add(btnPathOutput, "width 20, height 25");
-		pnlCentral.add(lblOfflineTitle, "growx, height 25");
-		pnlCentral.add(lblOffline, "growx, height 25, wrap");
+		pnlCentral.add(lblEliteTitle, "growx, height 25");
+		pnlCentral.add(lblElite, "growx, height 25, wrap");
 
 		pnlCentral.add(lblProbMutation, "width 120, height 25");
-		pnlCentral.add(spiProbMutation, "width 120, height 25");
+		pnlCentral.add(txtProbMutation, "width 120, height 25");
 		pnlCentral.add(lblName, "width 80, height 25");
 		pnlCentral.add(txtName, "growx, height 25, span 2");
-		pnlCentral.add(lblOnlineTitle, "growx, height 25");
-		pnlCentral.add(lblOnline, "growx, height 25, wrap 10");
+		pnlCentral.add(lblOfflineTitle, "growx, height 25");
+		pnlCentral.add(lblOffline, "growx, height 25, wrap");
 
 		pnlCentral.add(chartPanel, "growx, span 7");
 
@@ -326,16 +332,16 @@ public class VExperiment extends JFrame {
 		return lblProbCrossover;
 	}
 
-	public JSpinner getSpiProbCrossover() {
-		return spiProbCrossover;
+	public JTextField getTxtProbCrossover() {
+		return txtProbCrossover;
 	}
 
 	public JLabel getLblProbMutation() {
 		return lblProbMutation;
 	}
 
-	public JSpinner getSpiProbMutation() {
-		return spiProbMutation;
+	public JTextField getTxtProbMutation() {
+		return txtProbMutation;
 	}
 
 	public JButton getBtnClose() {
@@ -422,8 +428,8 @@ public class VExperiment extends JFrame {
 		spiChromosome.setEnabled(false);
 		spiPopulation.setEnabled(false);
 		spiGenerations.setEnabled(false);
-		spiProbCrossover.setEnabled(false);
-		spiProbMutation.setEnabled(false);
+		txtProbCrossover.setEnabled(false);
+		txtProbMutation.setEnabled(false);
 		txtName.setEnabled(false);
 		txtPathOutput.setEnabled(false);
 		cmbSelectLocale.setEnabled(false);
@@ -442,8 +448,8 @@ public class VExperiment extends JFrame {
 		spiChromosome.setEnabled(true);
 		spiPopulation.setEnabled(true);
 		spiGenerations.setEnabled(true);
-		spiProbCrossover.setEnabled(true);
-		spiProbMutation.setEnabled(true);
+		txtProbCrossover.setEnabled(true);
+		txtProbMutation.setEnabled(true);
 		txtName.setEnabled(true);
 		txtPathOutput.setEnabled(true);
 		cmbSelectLocale.setEnabled(true);
@@ -470,11 +476,13 @@ public class VExperiment extends JFrame {
 		average = new XYSeries("Average");
 		offline = new XYSeries("Offline");
 		online = new XYSeries("Online");
+		elite = new XYSeries("Elite");
 
 		dataset.removeAllSeries();
 		dataset.addSeries(average);
-		dataset.addSeries(offline);
 		dataset.addSeries(online);
+		dataset.addSeries(elite);
+		dataset.addSeries(offline);
 	}
 
 	public JLabel getLblOffline() {
@@ -487,6 +495,14 @@ public class VExperiment extends JFrame {
 
 	public JLabel getLblAverage() {
 		return lblAverage;
+	}
+
+	public XYSeries getElite() {
+		return elite;
+	}
+
+	public JLabel getLblElite() {
+		return lblElite;
 	}
 
 }

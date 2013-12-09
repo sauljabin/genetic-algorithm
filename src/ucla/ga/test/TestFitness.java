@@ -48,7 +48,7 @@ public class TestFitness {
 	public static void main(String[] args) throws IOException {
 		PrintWriter pw = new PrintWriter(new FileWriter("test.txt"), true);
 
-		double[][] p = new double[6001][30];
+		double[][] p = new double[1001][30];
 
 		for (int i = 0; i < p.length; i++) {
 			for (int j = 0; j < p[i].length; j++) {

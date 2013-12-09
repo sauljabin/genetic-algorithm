@@ -28,7 +28,7 @@ public class Function3 extends Fitness {
 
 	@Override
 	public double getFitness(int populationSize, double populationObjetiveValue, double objetiveValue, double... phenotype) {
-		return 10 - objetiveValue * populationSize / populationObjetiveValue;
+		return (100 - objetiveValue * populationSize / populationObjetiveValue);
 	}
 
 	@Override

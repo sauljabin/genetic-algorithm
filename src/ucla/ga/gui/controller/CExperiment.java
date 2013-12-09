@@ -54,7 +54,7 @@ import ucla.ga.util.HelperImage;
  * 
  * @author Saul Pina - sauljp07@gmail.com
  */
-public class CExperiment implements ActionListener, WindowListener, ItemListener, KeyListener {
+public class CExperiment implements ActionListener, WindowListener, ItemListener, KeyListener, Runnable {
 
 	private Locale locale;
 	private Config config;
@@ -197,25 +197,20 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 				vExperiment.getTxtPathOutput().setText(fileChooser.getSelectedFile().getAbsolutePath());
 			}
 		} else if (e.getSource().equals(vExperiment.getBtnRun())) {
-			try {
-				run();
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				e1.printStackTrace();
-				vExperiment.enable();
-			}
+			Thread run = new Thread(this);
+			run.start();
 		}
 	}
 
-	private void run() throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+	private void runGA() throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
 		// GET VAR
 		int populationSize = (int) vExperiment.getSpiPopulation().getValue();
 		int chromSize = (int) vExperiment.getSpiChromosome().getValue();
 		int generations = (int) vExperiment.getSpiGenerations().getValue();
 		double limLow = (double) vExperiment.getSpiLow().getValue();
 		double limUp = (double) vExperiment.getSpiUp().getValue();
-		double probMutation = (double) vExperiment.getSpiProbMutation().getValue();
-		double probCrossover = (double) vExperiment.getSpiProbCrossover().getValue();
+		double probMutation = Double.parseDouble(vExperiment.getTxtProbMutation().getText());
+		double probCrossover = Double.parseDouble(vExperiment.getTxtProbCrossover().getText());
 		String path = vExperiment.getTxtPathOutput().getText() + "/RESULTS-" + HelperDate.nowFormat("yyyyMMdd");
 		String time = HelperDate.nowFormat("yyyyMMddHmmss");
 		String filesName = path + "/" + time;
@@ -264,7 +259,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		prGraph.println(header);
 		prPopul.println(header);
 
-		prGraph.println("\nGENERATION\tAVERAGE\tOFFLINE\tONLINE\tELITE");
+		prGraph.println("\nGENERATION\tAVERAGE\tONLINE\tELITE\tOFFLINE");
 
 		for (int i = 1; i <= ag.getGenerations().size(); i++) {
 
@@ -293,16 +288,16 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			online = sumOnline / i;
 			offline = sumOffline / i;
 
-			prConsl.println(String.format("AVERAGE: %.15f; OFFLINE: %.15f; ONLINE: %.15f; ELITE: %.15f", average, offline, online, elite.getSelectionProb()));
-			prPopul.println(String.format("AVERAGE: %.15f; OFFLINE: %.15f; ONLINE: %.15f; ELITE: %.15f", average, offline, online, elite.getSelectionProb()));
-			prGraph.println(String.format("%d\t%.15f\t%.15f\t%.15f\t%.15f", i, average, offline, online, elite.getSelectionProb()));
-			addPoint(i, average, offline, online);
+			prConsl.println(String.format("AVERAGE: %.15f; ONLINE: %.15f; ELITE: %.15f; OFFLINE: %.15f", average, online, elite.getObjetiveValue(), offline));
+			prPopul.println(String.format("AVERAGE: %.15f; ONLINE: %.15f; ELITE: %.15f; OFFLINE: %.15f", average, online, elite.getObjetiveValue(), offline));
+			prGraph.println(String.format("%d\t%.15f\t%.15f\t%.15f\t%.15f", i, average, online, elite.getObjetiveValue(), offline));
+			addPoint(i, average, online, elite.getObjetiveValue(), offline);
 		}
 
-		exportImage(filesName + "IMAGE.png");
 		prGraph.close();
 		prPopul.close();
 		vExperiment.enable();
+		exportImage(filesName + "IMAGE.png");
 	}
 
 	@Override
@@ -326,13 +321,26 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		HelperImage.writeImage(vExperiment.getChart().createBufferedImage(800, 600), path);
 	}
 
-	public void addPoint(int t, double vAverage, double vOffLine, double vOnLine) {
+	public void addPoint(int t, double vAverage, double vOnLine, double vElite, double vOffLine) {
 		vExperiment.getAverage().add(t, vAverage);
 		vExperiment.getOffline().add(t, vOffLine);
 		vExperiment.getOnline().add(t, vOnLine);
+		vExperiment.getElite().add(t, vElite);
 		vExperiment.getLblAverage().setText(String.format("%.15f", vAverage));
 		vExperiment.getLblOffline().setText(String.format("%.15f", vOffLine));
 		vExperiment.getLblOnline().setText(String.format("%.15f", vOnLine));
+		vExperiment.getLblElite().setText(String.format("%.15f", vElite));
+	}
+
+	@Override
+	public void run() {
+		try {
+			runGA();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			vExperiment.enable();
+		}
 	}
 
 }
