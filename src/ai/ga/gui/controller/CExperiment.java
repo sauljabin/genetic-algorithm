@@ -34,10 +34,14 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import org.reflections.Reflections;
+
+import ai.ga.app.ClassWrapper;
 import ai.ga.app.Config;
 import ai.ga.app.Locale;
 import ai.ga.element.Crossover;
@@ -85,22 +89,32 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		}
 		vExperiment.addListener(this);
 
-		vExperiment.getCmbModelIndividual().addElement("IndividualReal");
-		vExperiment.getCmbModelIndividual().addElement("IndividualInteger");
-		vExperiment.getCmbModelIndividual().addElement("IndividualFunction1");
-		vExperiment.getCmbModelIndividual().addElement("IndividualFunction2");
-		vExperiment.getCmbModelIndividual().addElement("IndividualFunction3");
+		Reflections reflections = new Reflections();
+		Iterator<Class<? extends Individual>> iIndividual = reflections.getSubTypesOf(Individual.class).iterator();
+		Iterator<Class<? extends Fitness>> iFitness = reflections.getSubTypesOf(Fitness.class).iterator();
+		Iterator<Class<? extends Crossover>> iCrossover = reflections.getSubTypesOf(Crossover.class).iterator();
+		Iterator<Class<? extends Selection>> iSelection = reflections.getSubTypesOf(Selection.class).iterator();
+		Iterator<Class<? extends Mutation>> iMutation = reflections.getSubTypesOf(Mutation.class).iterator();
 
-		vExperiment.getCmbModelCrossover().addElement("CrossoverOnePoint");
+		while (iIndividual.hasNext()) {
+			vExperiment.getCmbModelIndividual().addElement(new ClassWrapper(iIndividual.next()));
+		}
 
-		vExperiment.getCmbModelFitness().addElement("FitnessParable");
-		vExperiment.getCmbModelFitness().addElement("Function1");
-		vExperiment.getCmbModelFitness().addElement("Function2");
-		vExperiment.getCmbModelFitness().addElement("Function3");
+		while (iFitness.hasNext()) {
+			vExperiment.getCmbModelFitness().addElement(new ClassWrapper(iFitness.next()));
+		}
 
-		vExperiment.getCmbModelMutation().addElement("MutationPerChromosome");
+		while (iCrossover.hasNext()) {
+			vExperiment.getCmbModelCrossover().addElement(new ClassWrapper(iCrossover.next()));
+		}
 
-		vExperiment.getCmbModelSelection().addElement("SelectionRoulette");
+		while (iSelection.hasNext()) {
+			vExperiment.getCmbModelSelection().addElement(new ClassWrapper(iSelection.next()));
+		}
+
+		while (iMutation.hasNext()) {
+			vExperiment.getCmbModelMutation().addElement(new ClassWrapper(iMutation.next()));
+		}
 
 		vExperiment.getTxtPathOutput().setText(new File("").getAbsolutePath());
 		String title = "GA-" + HelperDate.nowFormat("yyyy-MM-dd");
@@ -215,11 +229,11 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		String time = HelperDate.nowFormat("yyyyMMddHmmss");
 		String filesName = path + "/" + time;
 		String name = vExperiment.getTxtName().getText();
-		Class<?> classIndividual = Class.forName("ucla.ga.element.individual." + vExperiment.getCmbModelIndividual().getSelectedItem().toString());
-		Class<?> classCrossover = Class.forName("ucla.ga.element.crossover." + vExperiment.getCmbModelCrossover().getSelectedItem().toString());
-		Class<?> classMutation = Class.forName("ucla.ga.element.mutation." + vExperiment.getCmbModelMutation().getSelectedItem().toString());
-		Class<?> classSelection = Class.forName("ucla.ga.element.selection." + vExperiment.getCmbModelSelection().getSelectedItem().toString());
-		Class<?> classFitness = Class.forName("ucla.ga.element.fitness." + vExperiment.getCmbModelFitness().getSelectedItem().toString());
+		Class<?> classIndividual = ((ClassWrapper) vExperiment.getCmbModelIndividual().getSelectedItem()).getClazz();
+		Class<?> classCrossover = ((ClassWrapper) vExperiment.getCmbModelCrossover().getSelectedItem()).getClazz();
+		Class<?> classMutation = ((ClassWrapper) vExperiment.getCmbModelMutation().getSelectedItem()).getClazz();
+		Class<?> classSelection = ((ClassWrapper) vExperiment.getCmbModelSelection().getSelectedItem()).getClazz();
+		Class<?> classFitness = ((ClassWrapper) vExperiment.getCmbModelFitness().getSelectedItem()).getClazz();
 
 		// CREATE OBJECTS
 		Selection selection = (Selection) classSelection.newInstance();
@@ -277,7 +291,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 				prConsl.println(individual);
 				if (elite == null) {
 					elite = individual;
-				} else if (individual.getSelectionProb() > elite.getSelectionProb()) {
+				} else if (individual.getFitness() >= elite.getFitness()) {
 					elite = individual;
 				}
 			}

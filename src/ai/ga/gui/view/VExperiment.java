@@ -40,6 +40,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import ai.ga.app.ClassWrapper;
 import ai.ga.gui.controller.CExperiment;
 import net.miginfocom.swing.MigLayout;
 
@@ -77,20 +78,20 @@ public class VExperiment extends JFrame {
 	private JLabel lblPathOutput;
 	private JLabel lblLimUp;
 	private JLabel lblCrossover;
-	private DefaultComboBoxModel<String> cmbModelCrossover;
-	private JComboBox<String> cmbCrossover;
+	private DefaultComboBoxModel<ClassWrapper> cmbModelCrossover;
+	private JComboBox<ClassWrapper> cmbCrossover;
 	private JLabel lblMutation;
-	private DefaultComboBoxModel<String> cmbModelMutation;
-	private JComboBox<String> cmbMutation;
+	private DefaultComboBoxModel<ClassWrapper> cmbModelMutation;
+	private JComboBox<ClassWrapper> cmbMutation;
 	private JLabel lblIndividual;
-	private DefaultComboBoxModel<String> cmbModelIndividual;
-	private JComboBox<String> cmbIndividual;
+	private DefaultComboBoxModel<ClassWrapper> cmbModelIndividual;
+	private JComboBox<ClassWrapper> cmbIndividual;
 	private JLabel lblSelection;
-	private DefaultComboBoxModel<String> cmbModelSelection;
-	private JComboBox<String> cmbSelection;
+	private DefaultComboBoxModel<ClassWrapper> cmbModelSelection;
+	private JComboBox<ClassWrapper> cmbSelection;
 	private JLabel lblFitness;
-	private DefaultComboBoxModel<String> cmbModelFitness;
-	private JComboBox<String> cmbFitness;
+	private DefaultComboBoxModel<ClassWrapper> cmbModelFitness;
+	private JComboBox<ClassWrapper> cmbFitness;
 	private JLabel lblName;
 	private JTextField txtName;
 
@@ -154,24 +155,24 @@ public class VExperiment extends JFrame {
 		txtProbMutation = new JTextField("0.001");
 
 		lblIndividual = new JLabel();
-		cmbModelIndividual = new DefaultComboBoxModel<String>();
-		cmbIndividual = new JComboBox<String>(cmbModelIndividual);
+		cmbModelIndividual = new DefaultComboBoxModel<ClassWrapper>();
+		cmbIndividual = new JComboBox<ClassWrapper>(cmbModelIndividual);
 
 		lblCrossover = new JLabel();
-		cmbModelCrossover = new DefaultComboBoxModel<String>();
-		cmbCrossover = new JComboBox<String>(cmbModelCrossover);
+		cmbModelCrossover = new DefaultComboBoxModel<ClassWrapper>();
+		cmbCrossover = new JComboBox<ClassWrapper>(cmbModelCrossover);
 
 		lblMutation = new JLabel();
-		cmbModelMutation = new DefaultComboBoxModel<String>();
-		cmbMutation = new JComboBox<String>(cmbModelMutation);
+		cmbModelMutation = new DefaultComboBoxModel<ClassWrapper>();
+		cmbMutation = new JComboBox<ClassWrapper>(cmbModelMutation);
 
 		lblSelection = new JLabel();
-		cmbModelSelection = new DefaultComboBoxModel<String>();
-		cmbSelection = new JComboBox<String>(cmbModelSelection);
+		cmbModelSelection = new DefaultComboBoxModel<ClassWrapper>();
+		cmbSelection = new JComboBox<ClassWrapper>(cmbModelSelection);
 
 		lblFitness = new JLabel();
-		cmbModelFitness = new DefaultComboBoxModel<String>();
-		cmbFitness = new JComboBox<String>(cmbModelFitness);
+		cmbModelFitness = new DefaultComboBoxModel<ClassWrapper>();
+		cmbFitness = new JComboBox<ClassWrapper>(cmbModelFitness);
 
 		lblPathOutput = new JLabel();
 		txtPathOutput = new JTextField();
@@ -372,7 +373,7 @@ public class VExperiment extends JFrame {
 		return lblCrossover;
 	}
 
-	public DefaultComboBoxModel<String> getCmbModelCrossover() {
+	public DefaultComboBoxModel<ClassWrapper> getCmbModelCrossover() {
 		return cmbModelCrossover;
 	}
 
@@ -380,7 +381,7 @@ public class VExperiment extends JFrame {
 		return lblMutation;
 	}
 
-	public DefaultComboBoxModel<String> getCmbModelMutation() {
+	public DefaultComboBoxModel<ClassWrapper> getCmbModelMutation() {
 		return cmbModelMutation;
 	}
 
@@ -388,7 +389,7 @@ public class VExperiment extends JFrame {
 		return lblIndividual;
 	}
 
-	public DefaultComboBoxModel<String> getCmbModelIndividual() {
+	public DefaultComboBoxModel<ClassWrapper> getCmbModelIndividual() {
 		return cmbModelIndividual;
 	}
 
@@ -396,7 +397,7 @@ public class VExperiment extends JFrame {
 		return lblSelection;
 	}
 
-	public DefaultComboBoxModel<String> getCmbModelSelection() {
+	public DefaultComboBoxModel<ClassWrapper> getCmbModelSelection() {
 		return cmbModelSelection;
 	}
 
@@ -404,7 +405,7 @@ public class VExperiment extends JFrame {
 		return lblFitness;
 	}
 
-	public DefaultComboBoxModel<String> getCmbModelFitness() {
+	public DefaultComboBoxModel<ClassWrapper> getCmbModelFitness() {
 		return cmbModelFitness;
 	}
 

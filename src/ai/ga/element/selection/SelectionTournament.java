@@ -18,8 +18,13 @@
 
 package ai.ga.element.selection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import ai.ga.element.Individual;
 import ai.ga.element.Selection;
+import ai.ga.util.HelperMath;
 
 /**
  * 
@@ -29,8 +34,27 @@ public class SelectionTournament extends Selection {
 
 	@Override
 	public Individual selection(Individual[] population) {
+		
+		int k = 5;// population.length / 2;
+		if (k > population.length)
+			k = population.length;
 
-		return null;
+		List<Individual> tempList = new ArrayList<Individual>();
+
+		for (int i = 0; i < k;) {
+			Individual select = population[HelperMath.random(0, population.length - 1)];
+			if (tempList.contains(select))
+				continue;
+			tempList.add(select);
+			i++;
+		}
+
+		Individual better = tempList.get(0);
+		for (int i = 1; i < tempList.size(); i++) {
+			if (tempList.get(i).getFitness() >= better.getFitness())
+				better = tempList.get(i);
+		}
+
+		return better;
 	}
-
 }
