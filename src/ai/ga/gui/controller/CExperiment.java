@@ -316,6 +316,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			addPoint(i, average, online, elite.getObjetiveValue(), offline);
 		}
 
+		vExperiment.getBtnStop().setEnabled(false);
 		prGraph.close();
 		prPopul.close();
 		vExperiment.enable();
