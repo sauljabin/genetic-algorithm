@@ -73,6 +73,7 @@ public class VExperiment extends JFrame {
 	private JTextField txtProbMutation;
 	private JPanel pnlSouth;
 	private JButton btnClose;
+	private JButton btnStop;
 	private JTextField txtPathOutput;
 	private JButton btnPathOutput;
 	private JLabel lblPathOutput;
@@ -265,13 +266,16 @@ public class VExperiment extends JFrame {
 		add(pnlSouth, BorderLayout.SOUTH);
 
 		btnRun = new JButton();
+		btnStop = new JButton();
 		btnClose = new JButton();
 
 		pnlSouth.add(btnRun);
+		pnlSouth.add(btnStop);
 		pnlSouth.add(btnClose);
 
 		// ADD BUTTONS
 		buttons.add(btnClose);
+		buttons.add(btnStop);
 		buttons.add(btnPathOutput);
 		buttons.add(btnRun);
 	}
@@ -504,6 +508,10 @@ public class VExperiment extends JFrame {
 
 	public JLabel getLblElite() {
 		return lblElite;
+	}
+
+	public JButton getBtnStop() {
+		return btnStop;
 	}
 
 }

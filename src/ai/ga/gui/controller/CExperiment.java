@@ -65,6 +65,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 	private VExperiment vExperiment;
 	private String pathResource;
 	private String pathLocale;
+	private boolean stop;
 
 	public CExperiment() throws FileNotFoundException, IOException {
 		pathResource = "resource/";
@@ -121,11 +122,13 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 		vExperiment.getTxtName().setText(title);
 		vExperiment.getChart().setTitle(title);
 		vExperiment.setTitle(title);
+		vExperiment.getBtnStop().setEnabled(false);
 	}
 
 	private void loadLocale() {
 		vExperiment.getLblLocale().setText(locale.get("lblLocale"));
 		vExperiment.getBtnRun().setText(locale.get("btnRun"));
+		vExperiment.getBtnStop().setText(locale.get("btnStop"));
 		vExperiment.getBtnClose().setText(locale.get("btnClose"));
 		vExperiment.getLblLimLow().setText(locale.get("lblLimLow"));
 		vExperiment.getLblLimUp().setText(locale.get("lblLimUp"));
@@ -212,7 +215,12 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 			}
 		} else if (e.getSource().equals(vExperiment.getBtnRun())) {
 			Thread run = new Thread(this);
+			stop = false;
+			vExperiment.getBtnStop().setEnabled(true);
 			run.start();
+		} else if (e.getSource().equals(vExperiment.getBtnStop())) {
+			stop = true;
+			vExperiment.getBtnStop().setEnabled(false);
 		}
 	}
 
@@ -275,7 +283,7 @@ public class CExperiment implements ActionListener, WindowListener, ItemListener
 
 		prGraph.println("\nGENERATION\tAVERAGE\tONLINE\tELITE\tOFFLINE");
 
-		for (int i = 1; i <= ag.getGenerations().size(); i++) {
+		for (int i = 1; i <= ag.getGenerations().size() && !stop; i++) {
 
 			prConsl.println("\nGENERATION: " + i);
 			prPopul.println("\nGENERATION: " + i);

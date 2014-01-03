@@ -19,7 +19,6 @@
 package ai.ga.element.selection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ai.ga.element.Individual;

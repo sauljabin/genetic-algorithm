@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
-import sun.reflect.Reflection;
 import ai.ga.element.Selection;
 import ai.ga.element.individual.IndividualReal;
 import ai.ga.element.selection.SelectionTournament;
