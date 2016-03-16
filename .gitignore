@@ -1,0 +1,11 @@
+bin/
+log/
+*~
+*.class
+*.log
+*.tmp
+.directory
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
