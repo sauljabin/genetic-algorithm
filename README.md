@@ -7,7 +7,7 @@ Descripción
 
 
 - Copyright: 2014 Saúl Piña <sauljabin@gmail.com>
-- Repository: https://github.com/genetic-algorithm
+- Repository: https://github.com/sauljabin/genetic-algorithm
 - License: MIT
 - Language: Java
 - IDE: Eclipse
