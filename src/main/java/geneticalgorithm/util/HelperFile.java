@@ -12,11 +12,6 @@ package geneticalgorithm.util;
 import java.io.File;
 import java.io.FileFilter;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- *
- */
 public class HelperFile {
     private static FileFilter isFile = new FileFilter() {
         @Override

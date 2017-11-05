@@ -9,10 +9,6 @@
 
 package geneticalgorithm.app;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class ClassWrapper {
     private Class<?> clazz;
 

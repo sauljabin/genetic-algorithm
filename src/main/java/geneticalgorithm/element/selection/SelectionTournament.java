@@ -16,10 +16,6 @@ import geneticalgorithm.util.HelperMath;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class SelectionTournament extends Selection {
 
     @Override

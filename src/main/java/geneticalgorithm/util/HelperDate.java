@@ -14,12 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Clase para el manejo de la fecha
- *
- * @author Saul Pina - sauljp07@gmail.com
- * @see http://docs.oracle.com/javase/tutorial/i18n/format/simpleDateFormat.html
- */
 public abstract class HelperDate {
     public static final String FORMATO_FECHA_SLASH = "dd/MM/yyyy";
     public static final String FORMATO_FECHA_GUION = "dd-MM-yyyy";
@@ -40,10 +34,8 @@ public abstract class HelperDate {
     /**
      * Esta funcion formatea una fecha
      *
-     * @param date
-     *            Fecha que se va a formatear
-     * @param format
-     *            Formato a utilizar
+     * @param date   Fecha que se va a formatear
+     * @param format Formato a utilizar
      * @return Fecha como String con el formato establecido
      */
     public static String format(Date date, String format) {
@@ -79,10 +71,8 @@ public abstract class HelperDate {
      * negativos en cantidad ejemplo: HelperDate.future(HelperDate.MES,-3) tres
      * meses atras
      *
-     * @param campo
-     *            ANNO, DIA, MES, HORA, MINUTO, SEGUNDO
-     * @param cantidad
-     *            Cuanto se va a sumar
+     * @param campo    ANNO, DIA, MES, HORA, MINUTO, SEGUNDO
+     * @param cantidad Cuanto se va a sumar
      * @return Fecha futura
      */
     public static Date future(int campo, int cantidad) {
@@ -95,12 +85,9 @@ public abstract class HelperDate {
      * Esta funcion retorna una fecha futura, para el pasado usarnumeros
      * negativos en cantidad
      *
-     * @param ca
-     *            Calendar
-     * @param campo
-     *            ANNO, DIA, MES, HORA, MINUTO, SEGUNDO
-     * @param cantidad
-     *            Cuanto se va a sumar
+     * @param ca       Calendar
+     * @param campo    ANNO, DIA, MES, HORA, MINUTO, SEGUNDO
+     * @param cantidad Cuanto se va a sumar
      * @return Fecha futura
      */
     public static Date future(Calendar ca, int campo, int cantidad) {

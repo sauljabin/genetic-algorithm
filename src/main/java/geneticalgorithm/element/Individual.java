@@ -9,10 +9,6 @@
 
 package geneticalgorithm.element;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public abstract class Individual {
 
     protected String chromosome;

@@ -12,10 +12,6 @@ package geneticalgorithm.element.mutation;
 import geneticalgorithm.element.Individual;
 import geneticalgorithm.element.Mutation;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class MutationPerChromosome extends Mutation {
 
     @Override

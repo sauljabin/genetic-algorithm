@@ -14,17 +14,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public abstract class HelperImage {
 
     /**
      * Lee una imagen desde el disco
      *
-     * @param file
-     *            Archivo a leer
+     * @param file Archivo a leer
      * @return Imagen en formato BufferedImage
      * @throws IOException
      */
@@ -35,8 +30,7 @@ public abstract class HelperImage {
     /**
      * Lee una imagen desde el disco
      *
-     * @param file
-     *            Archivo a leer
+     * @param file Archivo a leer
      * @return Imagen en formato BufferedImage
      * @throws IOException
      */
@@ -47,10 +41,8 @@ public abstract class HelperImage {
     /**
      * Escribir imagen en disco
      *
-     * @param image
-     *            Imagen a escribir
-     * @param path
-     *            Ruta a gurdar
+     * @param image Imagen a escribir
+     * @param path  Ruta a gurdar
      * @return Verdadero si fue escrita satisfactoriamente
      * @throws IOException
      */
@@ -62,10 +54,8 @@ public abstract class HelperImage {
     /**
      * Escribir imagen en disco
      *
-     * @param image
-     *            Imagen a escribir
-     * @param file
-     *            Archivo a guardar
+     * @param image Imagen a escribir
+     * @param file  Archivo a guardar
      * @return Verdadero si fue escrita satisfactoriamente
      * @throws IOException
      */
@@ -80,10 +70,8 @@ public abstract class HelperImage {
     /**
      * Toma una imagen en formato BufferedImage y la transforma en binario
      *
-     * @param image
-     *            Imagen a transformar
-     * @param extension
-     *            Extension de la imagen
+     * @param image     Imagen a transformar
+     * @param extension Extension de la imagen
      * @return Imagen en formato binario
      * @throws IOException
      */
@@ -100,8 +88,7 @@ public abstract class HelperImage {
     /**
      * Toma una imagen como arreglo binario y lo transforma en BufferedImage
      *
-     * @param image
-     *            Imagen en binario
+     * @param image Imagen en binario
      * @return Una imagen tipo BufferedImage
      * @throws IOException
      */
@@ -116,10 +103,8 @@ public abstract class HelperImage {
      * <p>
      * Reescala la imagen segun un porcentage
      *
-     * @param image
-     *            Imagen a redimensionar
-     * @param percent
-     *            Porcentaje
+     * @param image   Imagen a redimensionar
+     * @param percent Porcentaje
      * @return Imagen reescalada
      */
     public static BufferedImage resizePercent(BufferedImage image, float percent) {
@@ -136,10 +121,8 @@ public abstract class HelperImage {
      * <p>
      * Toma un alto maximo y proporciona el ancho de la imagen
      *
-     * @param image
-     *            Imagen a redimensionar
-     * @param height
-     *            Ancho de la imagen
+     * @param image  Imagen a redimensionar
+     * @param height Ancho de la imagen
      * @return Imagen reescalada
      */
     public static BufferedImage resizeMaxHeight(BufferedImage image, int height) {
@@ -153,10 +136,8 @@ public abstract class HelperImage {
      * <p>
      * Toma un ancho maximo y proporciona el alto de la imagen
      *
-     * @param image
-     *            Imagen a redimensionar
-     * @param width
-     *            Ancho de la imagen
+     * @param image Imagen a redimensionar
+     * @param width Ancho de la imagen
      * @return Imagen reescalada
      */
     public static BufferedImage resizeMaxWidth(BufferedImage image, int width) {
@@ -168,12 +149,9 @@ public abstract class HelperImage {
     /**
      * Esta funcion redimensiona una imagen, sin perdida
      *
-     * @param image
-     *            Imagen a redimensionar
-     * @param width
-     *            Ancho de la imagen
-     * @param height
-     *            Alto de la imagen
+     * @param image  Imagen a redimensionar
+     * @param width  Ancho de la imagen
+     * @param height Alto de la imagen
      * @return Imagen reescalada
      */
     public static BufferedImage resize(BufferedImage image, int width,

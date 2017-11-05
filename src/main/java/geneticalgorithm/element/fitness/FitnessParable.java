@@ -11,10 +11,6 @@ package geneticalgorithm.element.fitness;
 
 import geneticalgorithm.element.Fitness;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class FitnessParable extends Fitness {
 
     @Override

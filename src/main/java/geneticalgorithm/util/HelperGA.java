@@ -9,10 +9,6 @@
 
 package geneticalgorithm.util;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class HelperGA {
 
     public static double convertChromosomeToReal(String chromosome, double lowerLimit, double upperLimit, int size) {

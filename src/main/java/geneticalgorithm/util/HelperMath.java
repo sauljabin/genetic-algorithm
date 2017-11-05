@@ -11,10 +11,6 @@ package geneticalgorithm.util;
 
 import java.util.Random;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public abstract class HelperMath {
 
     // RANDOM

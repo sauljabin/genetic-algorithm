@@ -25,10 +25,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class CExperiment implements ActionListener, WindowListener, KeyListener, Runnable {
 
     private Locale locale;
@@ -208,7 +204,7 @@ public class CExperiment implements ActionListener, WindowListener, KeyListener,
         PrintStream prConsl = System.out;
 
         // RUN
-        vExperiment.disable();
+        vExperiment.disableGui();
         ag.run();
         vExperiment.resetXY();
         // RESULTS VAR
@@ -266,7 +262,7 @@ public class CExperiment implements ActionListener, WindowListener, KeyListener,
         vExperiment.getBtnStop().setEnabled(false);
         prGraph.close();
         prPopul.close();
-        vExperiment.enable();
+        vExperiment.enableGui();
         exportImage(filesName + "IMAGE.png");
     }
 
@@ -309,7 +305,7 @@ public class CExperiment implements ActionListener, WindowListener, KeyListener,
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-            vExperiment.enable();
+            vExperiment.enableGui();
         }
     }
 

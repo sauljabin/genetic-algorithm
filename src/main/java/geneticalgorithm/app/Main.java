@@ -13,10 +13,6 @@ import geneticalgorithm.gui.controller.CExperiment;
 
 import javax.swing.*;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class Main {
 
     public static void main(String[] args) {

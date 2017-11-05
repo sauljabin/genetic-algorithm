@@ -13,10 +13,6 @@ import geneticalgorithm.element.Individual;
 import geneticalgorithm.element.Selection;
 import geneticalgorithm.util.HelperMath;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class SelectionRoulette extends Selection {
 
     @Override

@@ -13,10 +13,6 @@ import geneticalgorithm.element.Crossover;
 import geneticalgorithm.element.Individual;
 import geneticalgorithm.util.HelperMath;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class CrossoverOnePoint extends Crossover {
 
     @Override

@@ -24,10 +24,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class VExperiment extends JFrame {
 
     private List<JButton> buttons;
@@ -384,7 +380,7 @@ public class VExperiment extends JFrame {
         return chart;
     }
 
-    public void disable() {
+    public void disableGui() {
         btnRun.setEnabled(false);
         btnPathOutput.setEnabled(false);
         spiLow.setEnabled(false);
@@ -403,7 +399,7 @@ public class VExperiment extends JFrame {
         cmbFitness.setEnabled(false);
     }
 
-    public void enable() {
+    public void enableGui() {
         btnRun.setEnabled(true);
         btnPathOutput.setEnabled(true);
         spiLow.setEnabled(true);

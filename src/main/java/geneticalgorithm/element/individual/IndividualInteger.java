@@ -13,10 +13,6 @@ import geneticalgorithm.element.Individual;
 import geneticalgorithm.util.HelperGA;
 import geneticalgorithm.util.HelperMath;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class IndividualInteger extends Individual {
 
     public IndividualInteger(double lowerLimit, double upperLimit, int size) {

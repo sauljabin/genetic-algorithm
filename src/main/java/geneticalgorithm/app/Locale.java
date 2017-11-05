@@ -13,10 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class Locale {
 
     private Properties properties;

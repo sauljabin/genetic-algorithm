@@ -11,10 +11,6 @@ package geneticalgorithm.element;
 
 import java.util.Vector;
 
-/**
- *
- * @author Saul Pina - sauljp07@gmail.com
- */
 public class GeneticAlgorithm {
 
     private Selection selection;
